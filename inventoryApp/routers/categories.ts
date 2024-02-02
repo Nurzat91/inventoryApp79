@@ -26,7 +26,7 @@ categoriesRouter.post('/', filesUpload.single('dataSet'), async (req, res) => {
   const categories: CategoriesWithoutId = {
     title: req.body.title,
     description: req.body.description,
-    dataSet: req.file ? req.file.fieldname : null,
+    dataSet: req.file ? req.file.filename : null,
   };
 
   const newCategories = await fileDb.addItem(categories);

@@ -26,7 +26,7 @@ placesRouter.post('/', filesUpload.single('dataSet'), async (req, res) => {
   const places: CategoriesWithoutId = {
     title: req.body.title,
     description: req.body.description,
-    dataSet: req.file ? req.file.fieldname : null,
+    dataSet: req.file ? req.file.filename : null,
   };
 
   const newPlaces = await fileDb.addItem(places);
