@@ -5,3 +5,4 @@ export interface Categories {
   dataSet: string | null,
 }
 export type CategoriesWithoutId = Omit<Categories, 'id'>;
+
