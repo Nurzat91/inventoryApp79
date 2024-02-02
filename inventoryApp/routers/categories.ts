@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import fileDb from "../fileDb";
 import {CategoriesWithoutId} from "../types";
+import {filesUpload} from "../multer";
 
 const categoriesRouter = Router();
 
@@ -21,10 +22,11 @@ categoriesRouter.get('/:id', async (req, res) => {
   res.send(category);
 });
 
-categoriesRouter.post('/', async (req, res) => {
+categoriesRouter.post('/', filesUpload.single('dataSet'), async (req, res) => {
   const categories: CategoriesWithoutId = {
     title: req.body.title,
     description: req.body.description,
+    dataSet: req.file ? req.file.fieldname : null,
   };
 
   const newCategories = await fileDb.addItem(categories);
@@ -42,6 +44,7 @@ categoriesRouter.put('/:id', async (req, res) => {
   const updatedCategory: CategoriesWithoutId = {
     title: req.body.title,
     description: req.body.description,
+    dataSet: req.body.dataSet,
   };
 
   await fileDb.updateItem(categoryId, updatedCategory);
